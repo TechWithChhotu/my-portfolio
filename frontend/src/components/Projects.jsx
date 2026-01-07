@@ -1,15 +1,25 @@
 import { useEffect } from "react";
 import PageRenderer from "./PageRenderer";
 import { useState } from "react";
+import API from "../services/API";
+import axios from "axios";
 
 // <PageRenderer />;
 
 export default function Projects() {
   const [projects, setProjects] = useState(null);
   useEffect(() => {
-    fetch("http://localhost:5000/api/projects")
-      .then((res) => res.json())
-      .then((data) => setProjects(data.projects));
+    const getProject = async () => {
+      const res = await axios.get("http://localhost:5000/api/projects");
+      // ("https://my-portfolio-j3j9.onrender.com/api/projects");
+
+      if (res.data) {
+        console.log(res.data.projects);
+
+        setProjects(res.data.projects);
+      }
+    };
+    getProject();
   }, []);
 
   return (

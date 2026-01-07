@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000", // backend URL
-  timeout: 30000,
+  baseURL: "https://my-portfolio-j3j9.onrender.com", // backend URL
+  timeout: 40000,
 });
 
 export default API;
