@@ -11,7 +11,7 @@ export default function Header() {
         shadow-lg shadow-black/20
       "
     >
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-9">
         <div className="flex h-16 items-center justify-between text-white">
           {/* Logo */}
           <a href="#" className="flex items-center gap-2 text-lg font-semibold">
