@@ -23,7 +23,7 @@ import AddProject from "./pages/AddProject";
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="" element={<Layout />}>
+      <Route path="/" element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<AllProjects />} />
         <Route path="/update-project" element={<UpdateProject />} />
