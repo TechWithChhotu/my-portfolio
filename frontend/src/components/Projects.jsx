@@ -10,7 +10,9 @@ export default function Projects() {
   const [projects, setProjects] = useState(null);
   useEffect(() => {
     const getProject = async () => {
-      const res = await axios.get("http://localhost:5000/api/projects");
+      const res = await axios.get(
+        "https://my-portfolio-j3j9.onrender.com/api/projects"
+      );
       // ("https://my-portfolio-j3j9.onrender.com/api/projects");
 
       if (res.data) {
