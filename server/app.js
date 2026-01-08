@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://chhotu-patel2025.netlify.app",
+    origin: "*",
     methods: ["GET", "POST", "PUT", "PATCH"],
     credentials: true,
   })
