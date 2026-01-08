@@ -6,13 +6,13 @@ import axios from "axios";
 
 // <PageRenderer />;
 
-export default function Projects() {
+export default function AllProjects() {
+  const [projects, setProjects] = useState(null);
   const API_URL = import.meta.env.VITE_API_URL;
 
-  const [projects, setProjects] = useState(null);
   useEffect(() => {
     const getProject = async () => {
-      const res = await axios.get(`${API_URL}/api/project/top`);
+      const res = await axios.get(`${API_URL}/api/project`);
       // ("https://my-portfolio-j3j9.onrender.com/api/projects");
 
       if (res.data) {
