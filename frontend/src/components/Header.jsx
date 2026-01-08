@@ -34,7 +34,7 @@ export default function Header() {
                 href="#Skills"
                 className="hover:text-cyan-300 transition-colors"
               >
-                Technologies
+                Skills
               </a>
             </li>
             <li>
