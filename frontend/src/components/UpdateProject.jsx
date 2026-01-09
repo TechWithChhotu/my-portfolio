@@ -5,19 +5,38 @@ const UpdateProject = () => {
   const [projects, setProjects] = useState(null);
   const API_URL = import.meta.env.VITE_API_URL;
 
+  // useEffect(() => {
+  //   const getProject = async () => {
+  //     const res = await axios.get(`${API_URL}/api/project`);
+  //     // ("https://my-portfolio-j3j9.onrender.com/api/projects");
+
+  //     if (res.data) {
+  //       console.log(res.data.projects);
+
+  //       setProjects(res.data.projects);
+  //     }
+  //   };
+  //   getProject();
+  // }, []);
   useEffect(() => {
     const getProject = async () => {
-      const res = await axios.get(`${API_URL}/api/project`);
-      // ("https://my-portfolio-j3j9.onrender.com/api/projects");
+      const params = new URLSearchParams(window.location.search);
+      const u = params.get("u");
+      const p = params.get("p");
 
-      if (res.data) {
-        console.log(res.data.projects);
+      let url = `${API_URL}/api/project`;
 
-        setProjects(res.data.projects);
+      if (u && p) {
+        url += `?u=${u}&p=${p}`;
       }
+
+      const res = await axios.get(url);
+      setProjects(res.data.projects);
     };
+
     getProject();
   }, []);
+
   return (
     <section id="Projects" className="py-20 px-6 bg-[#0f1624]">
       <h2 className="text-3xl text-center mb-10 text-white">

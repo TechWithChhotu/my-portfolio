@@ -16,8 +16,6 @@ export default function AllProjects() {
       // ("https://my-portfolio-j3j9.onrender.com/api/projects");
 
       if (res.data) {
-        console.log(res.data.projects);
-
         setProjects(res.data.projects);
       }
     };

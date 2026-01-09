@@ -1,6 +1,26 @@
+import { useState, useEffect } from "react";
 import { FaGithub } from "react-icons/fa";
+import axios from "axios";
 
 export default function Header() {
+  const [isOwner, setIsOwner] = useState(false);
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  useEffect(() => {
+    const checkOwner = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/auth/status`, {
+          withCredentials: true,
+        });
+
+        setIsOwner(res.data.isOwner);
+      } catch {
+        setIsOwner(false);
+      }
+    };
+
+    checkOwner();
+  }, []);
   return (
     <header
       className="
@@ -14,7 +34,7 @@ export default function Header() {
       <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-9">
         <div className="flex h-16 items-center justify-between text-white">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 text-lg font-semibold">
+          <a href="/" className="flex items-center gap-2 text-lg font-semibold">
             <span className="text-3xl items-center justify-center">◎</span>
             Portfolio
           </a>
@@ -45,6 +65,27 @@ export default function Header() {
                 About me
               </a>
             </li>
+
+            {isOwner && (
+              <li>
+                <a
+                  href="/update-project"
+                  className="hover:text-cyan-300 transition-colors"
+                >
+                  update
+                </a>
+              </li>
+            )}
+            {isOwner && (
+              <li>
+                <a
+                  href="/add-project"
+                  className="hover:text-cyan-300 transition-colors"
+                >
+                  Add-Project
+                </a>
+              </li>
+            )}
           </ul>
 
           {/* Right Icons */}

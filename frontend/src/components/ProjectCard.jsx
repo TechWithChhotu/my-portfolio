@@ -103,9 +103,9 @@ export default function UpdateProjectCard({ project, onImageUpdate }) {
         {/* Re-capture screenshot */}
         <button
           onClick={handleRecapture}
-          disabled={refreshing}
+          // disabled={refreshing}
           className="px-4 py-1 rounded text-sm font-medium
-                     bg-blue-500 text-white"
+                     bg-blue-500 text-white cursor-pointer"
         >
           {refreshing ? "Refreshing..." : "Re-capture"}
         </button>

@@ -2,10 +2,14 @@ import Project from "../model/project.model.js";
 import linkToSrceenshot from "../utils/screen.utils.js";
 
 const project = async (req, res) => {
+  if (!req.isOwner) {
+    return res.status(403).json({
+      success: false,
+      msg: "you are not authorized",
+    });
+  }
   try {
     const { title, desc, link, isTop } = req.body;
-
-    console.log("Project controller called");
 
     // ✅ wait for screenshot URL
     const image = await linkToSrceenshot(link);
@@ -32,6 +36,8 @@ const project = async (req, res) => {
 };
 
 const getTopProject = async (req, res) => {
+  console.error("TEST");
+
   try {
     const projects = await Project.find({ isTop: true }).limit(4).lean();
 
@@ -69,7 +75,15 @@ const getProject = async (req, res) => {
     });
   }
 };
+
 const toggleIsTop = async (req, res) => {
+  if (!req.isOwner) {
+    return res.status(403).json({
+      success: false,
+      msg: "you are not authorized",
+    });
+  }
+
   try {
     const { id } = req.params;
 
@@ -98,4 +112,59 @@ const toggleIsTop = async (req, res) => {
     });
   }
 };
-export { project, getTopProject, getProject, toggleIsTop };
+const recaptureProjectImage = async (req, res) => {
+  // 🔐 Authorization
+  if (!req.isOwner) {
+    return res.status(403).json({
+      success: false,
+      msg: "you are not authorized",
+    });
+  }
+
+  try {
+    const { id } = req.params;
+
+    const project = await Project.findById(id);
+
+    if (!project) {
+      return res.status(404).json({
+        success: false,
+        msg: "Project not found",
+      });
+    }
+
+    // 🖼️ Re-capture screenshot (latest UI)
+
+    const newImage = await linkToSrceenshot(project.link);
+
+    // 🧹 OPTIONAL: delete old image if stored in cloud
+    // await deleteFromCloudinary(project.image);
+
+    project.image = newImage;
+    project.updatedAt = new Date();
+
+    await project.save();
+
+    res.json({
+      success: true,
+      msg: "Project image re-captured successfully",
+      image: newImage,
+    });
+  } catch (error) {
+    console.error("Re-capture error:", error);
+
+    res.status(500).json({
+      success: false,
+      msg: "Failed to re-capture project image",
+      error: error.message,
+    });
+  }
+};
+
+export {
+  project,
+  getTopProject,
+  getProject,
+  toggleIsTop,
+  recaptureProjectImage,
+};

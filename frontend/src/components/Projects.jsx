@@ -8,19 +8,42 @@ import axios from "axios";
 
 export default function Projects() {
   const API_URL = import.meta.env.VITE_API_URL;
+  console.log(API_URL);
 
   const [projects, setProjects] = useState(null);
+  // useEffect(() => {
+  //   const getProject = async () => {
+  //     const res = await axios.get(`${API_URL}/api/project/top`);
+  //     // ("https://my-portfolio-j3j9.onrender.com/api/projects");
+
+  //     if (res.data) {
+  //       console.log(res.data.projects);
+
+  //       setProjects(res.data.projects);
+  //     }
+  //   };
+  //   getProject();
+  // }, []);
   useEffect(() => {
     const getProject = async () => {
-      const res = await axios.get(`${API_URL}/api/project/top`);
-      // ("https://my-portfolio-j3j9.onrender.com/api/projects");
+      const params = new URLSearchParams(window.location.search);
+      const u = params.get("u");
+      const p = params.get("p");
 
-      if (res.data) {
-        console.log(res.data.projects);
+      let url = `${API_URL}/api/project/top`;
 
-        setProjects(res.data.projects);
+      if (u && p) {
+        url += `?u=${encodeURIComponent(u)}&p=${encodeURIComponent(p)}`;
       }
+
+      const res = await axios.get(url, {
+        withCredentials: true,
+      });
+
+      console.log(res.data);
+      setProjects(res.data.projects);
     };
+
     getProject();
   }, []);
 
