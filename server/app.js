@@ -8,8 +8,8 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://chhotuportfolio2026.netlify.app",
-    // origin: "http://localhost:5173",
+    // origin: "https://chhotuportfolio2026.netlify.app",
+    origin: "http://localhost:5173",
     methods: ["GET", "POST", "PUT", "PATCH"],
     credentials: true,
   })
