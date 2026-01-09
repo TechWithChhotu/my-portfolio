@@ -44,10 +44,19 @@ Message: ${message}
 💬 Message:
 ${message}
     `;
-
+    const html = `
+        <h3>New Contact Message</h3>
+        <p><b>Name:</b> ${name}</p>
+        <p><b>Email:</b> ${email}</p>
+        <p><b>Phone:</b> ${phone || "N/A"}</p>
+        <p><b>Message:</b></p>
+        <p>${message}</p>
+      `;
+    const subjectOfmail = subject || "New Portfolio Contact";
     try {
       await sendSMS(smsText);
       await sendWhatsApp(whatsappText);
+      await sendMail(subjectOfmail, html);
       await mailer.sendMail({
         from: `"Portfolio Contact" <${process.env.EMAIL_USER}>`,
         to: process.env.OWNER_EMAIL,
@@ -84,6 +93,7 @@ ${message}
 // import Contact from "../models/contact.model.js";
 // import { mailer } from "../utils/mailer.js";
 import { mailer } from "../utils/mailer.utils.js";
+import { sendMail } from "../utils/mail.utils.js";
 
 export const createContactMail = async (req, res) => {
   try {
