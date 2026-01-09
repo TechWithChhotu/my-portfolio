@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export default function Contact() {
+  const API_URL = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -24,13 +25,15 @@ export default function Contact() {
     try {
       setLoading(true);
       console.log(formData);
+      console.log("API_URL: ", API_URL);
 
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/contact`,
-        formData
-      );
-
-      alert("Message sent successfully ✅");
+      const res = await axios.post(`${API_URL}/api/contact`, formData, {
+        withCredentials: true,
+      });
+      console.error("contact res => ", res);
+      if (res) {
+        alert("Message sent successfully ✅");
+      }
 
       // reset form
       setFormData({
