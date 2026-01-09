@@ -97,9 +97,14 @@ export default function Projects() {
         ))}
       </div>
 
-      <a href="/projects" className="text-white">
-        See More Project
-      </a>
+      <div className="text-center ">
+        <a
+          href="/projects"
+          className="text-white rounded-2xl px-10 py-3 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500"
+        >
+          See more projects
+        </a>
+      </div>
       {/* <div className="grid md:grid-cols-2 gap-8">
         {projects.map((p, i) => (
           <div key={i} className="bg-slate-800 p-6 rounded-xl shadow-lg">
