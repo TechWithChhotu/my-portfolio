@@ -8,6 +8,11 @@ import {
 } from "../controller/project.controller.js";
 import { ownerAuth } from "../middleware/ownerAuth.js";
 import { checkOwnerStatus } from "../controller/auth.controller.js";
+import {
+  createContact,
+  createContactMail,
+} from "../controller/contact.controller.js";
+import { contactLimiter } from "../middleware/rateLimit.js";
 
 const router = express.Router();
 
@@ -24,5 +29,7 @@ router.post("/project", ownerAuth, project);
 router.get("/project", ownerAuth, getProject);
 router.get("/project/top", ownerAuth, getTopProject);
 router.get("/auth/status", ownerAuth, checkOwnerStatus);
+router.post("/contact", createContact);
+router.post("/contact-mail", contactLimiter, createContactMail);
 
 export default router;
