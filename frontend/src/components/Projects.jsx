@@ -96,6 +96,10 @@ export default function Projects() {
           // </div>
         ))}
       </div>
+
+      <a href="/projects" className="text-white">
+        See More Project
+      </a>
       {/* <div className="grid md:grid-cols-2 gap-8">
         {projects.map((p, i) => (
           <div key={i} className="bg-slate-800 p-6 rounded-xl shadow-lg">
