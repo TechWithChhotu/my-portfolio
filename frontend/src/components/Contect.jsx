@@ -168,11 +168,11 @@ export default function Contact() {
                   Message
                 </label>
               </div>
-              <div className="flex flex-col items-center justify-center bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-2xl">
+              <div className="flex flex-col items-center justify-center   bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-2xl">
                 <button
                   type="submit"
                   disabled={loading}
-                  className="text-white bg-gradient-cyan-purple-pink px-5 py-2 rounded-md Gradient-btn"
+                  className="text-white w-full h-full bg-gradient-cyan-purple-pink px-5 py-2 rounded-md Gradient-btn cursor-pointer "
                 >
                   {loading ? "Sending..." : "Submit"}
                 </button>
