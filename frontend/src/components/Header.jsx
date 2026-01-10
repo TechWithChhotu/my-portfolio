@@ -4,6 +4,8 @@ import axios from "axios";
 
 export default function Header() {
   const [isOwner, setIsOwner] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -12,7 +14,6 @@ export default function Header() {
         const res = await axios.get(`${API_URL}/api/auth/status`, {
           withCredentials: true,
         });
-
         setIsOwner(res.data.isOwner);
       } catch {
         setIsOwner(false);
@@ -21,6 +22,7 @@ export default function Header() {
 
     checkOwner();
   }, []);
+
   return (
     <header
       className="
@@ -35,7 +37,7 @@ export default function Header() {
         <div className="flex h-16 items-center justify-between text-white">
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 text-lg font-semibold">
-            <span className="text-3xl items-center justify-center">◎</span>
+            <span className="text-3xl">◎</span>
             Portfolio
           </a>
 
@@ -62,27 +64,22 @@ export default function Header() {
                 href="#AboutMe"
                 className="hover:text-cyan-300 transition-colors"
               >
-                About me
+                About Me
               </a>
             </li>
 
             {isOwner && (
               <li>
-                <a
-                  href="/update-project"
-                  className="hover:text-cyan-300 transition-colors"
-                >
-                  update
+                <a href="/update-project" className="hover:text-cyan-300">
+                  Update
                 </a>
               </li>
             )}
+
             {isOwner && (
               <li>
-                <a
-                  href="/add-project"
-                  className="hover:text-cyan-300 transition-colors"
-                >
-                  Add-Project
+                <a href="/add-project" className="hover:text-cyan-300">
+                  Add Project
                 </a>
               </li>
             )}
@@ -90,9 +87,17 @@ export default function Header() {
 
           {/* Right Icons */}
           <div className="flex items-center gap-5">
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-3xl"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              ☰
+            </button>
+
             <a
               href="https://github.com/TechWithChhotu?tab=repositories"
-              title="Gitthub"
+              title="Github"
               className="hover:scale-110 transition-transform text-3xl"
             >
               <FaGithub />
@@ -100,6 +105,45 @@ export default function Header() {
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#0f1624] border-t border-white/20">
+          <ul className="flex flex-col items-center gap-6 py-6 text-white text-lg">
+            <li>
+              <a href="/#Projects" onClick={() => setMenuOpen(false)}>
+                Projects
+              </a>
+            </li>
+            <li>
+              <a href="/#Skills" onClick={() => setMenuOpen(false)}>
+                Skills
+              </a>
+            </li>
+            <li>
+              <a href="/#AboutMe" onClick={() => setMenuOpen(false)}>
+                About Me
+              </a>
+            </li>
+
+            {isOwner && (
+              <li>
+                <a href="/update-project" onClick={() => setMenuOpen(false)}>
+                  Update
+                </a>
+              </li>
+            )}
+
+            {isOwner && (
+              <li>
+                <a href="/add-project" onClick={() => setMenuOpen(false)}>
+                  Add Project
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
     </header>
   );
 }

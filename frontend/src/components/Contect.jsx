@@ -53,16 +53,17 @@ export default function Contact() {
 
   return (
     <section id="contact" className="py-20 px-6 bg-slate-800">
-      <div className=" flex justify-center  items-center h-137.5 max-sm:h-225 rounded ">
+      <div className=" flex justify-center items-center min-h-screen max-sm:min-h-fit rounded">
         <div className="  rounded-xl overflow-hidden bg-[#0F1624] ">
-          <h2 className="text-3xl text-center mb-10 text-white">
+          <h2 className="text-3xl sm:text-2xl text-center mb-10 text-white">
             <span className="relative inline-block pb-2">
               <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-[length:100%_2px] bg-no-repeat bg-bottom">
                 Contact Me
               </span>
             </span>
           </h2>
-          <div className="w-250 max-sm:flex-col flex gap-12  justify-center items-center">
+          <div className="flex flex-col md:flex-row gap-12  justify-center items-center">
+            {/* className="flex flex-col md:flex-row gap-12 items-start" */}
             <form
               className="max-sm:h-112.5 max-sm:px-5 max-sm:pt-4  w-87.5  p-10  rounded-l-lg"
               onSubmit={handleSubmit}
@@ -178,53 +179,38 @@ export default function Contact() {
                 </button>
               </div>
             </form>
+            {/* INFO */}
 
-            <div>
-              <h2 className="text-center  FontSatisfy text-3xl max-sm:text-2xl text-white">
+            <div className="w-full md:w-1/2 text-white space-y-6 pb-5 ">
+              <h3 className="text-2xl text-center md:text-left">
                 Chhotu Patel
-              </h2>
+              </h3>
 
-              <ul className="grid gap-y-3 mt-5 text-white">
-                <li>
-                  <span className="font-semibold text-lg max-sm:text-base ">
-                    Address
-                  </span>
-                  <br />
-                  <span className="pl-10 max-sm:px-0 text-gray-500">
-                    Sheikhpura, Bihar,India
-                  </span>
-                </li>
-                <li>
-                  <span className="font-semibold text-lg max-sm:text-base">
-                    Phone
-                  </span>
-                  <br />
-                  <span className="pl-10 max-sm:px-0 text-gray-500">
-                    +91 8920823219
-                  </span>
-                </li>
-                <li>
-                  <span className="font-semibold text-lg">Email</span>
-                  <br />
-                  <span className="pl-10 max-sm:px-0 max-sm:text-sm text-gray-500">
-                    chhotustudymail@gmail.com
-                  </span>
-                </li>
-              </ul>
+              <div className="text-gray-400 space-y-2 text-center md:text-left">
+                <p>
+                  <b>Address:</b> Sheikhpura, Bihar, India
+                </p>
+                <p>
+                  <b>Phone:</b> +91 8920823219
+                </p>
+                <p>
+                  <b>Email:</b> chhotustudymail@gmail.com
+                </p>
+              </div>
 
-              <div className="flex gap-5 mt-10 justify-center text-white">
+              <div className="flex justify-center md:justify-start gap-6 text-3xl">
                 <a
                   href="https://www.linkedin.com/in/chhotu-kumar-13364923a/"
-                  title="LinkedIn"
-                  className="text-4xl"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   <FaLinkedin />
                 </a>
 
                 <a
-                  href="https://www.instagram.com/techwithchhotu/?"
-                  title="Instagram"
-                  className="text-4xl"
+                  href="https://www.instagram.com/techwithchhotu/"
+                  target="_blank"
+                  rel="noreferrer"
                 >
                   <FaInstagram />
                 </a>

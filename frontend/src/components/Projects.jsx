@@ -48,8 +48,8 @@ export default function Projects() {
   }, []);
 
   return (
-    <section id="Projects" className="py-20 px-6 bg-[#0f1624]">
-      <h2 className="text-3xl text-center mb-10 text-white">
+    <section id="Projects" className="py-16 sm:py-20 bg-[#0f1624]">
+      <h2 className="text-2xl sm:text-3xl text-center mb-8 sm:mb-10 text-white">
         <span className="relative inline-block pb-2">
           <span className="bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 bg-[length:100%_2px] bg-no-repeat bg-bottom">
             Projects
@@ -57,66 +57,48 @@ export default function Projects() {
         </span>
       </h2>
 
-      <div className="grid grid-cols-2 text-white gap-10 p-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 px-3 sm:px-6 lg:px-10">
         {projects?.map((p, i) => (
           <div
             key={i}
             className="p-[2px] rounded-2xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500"
           >
-            <div className="p-6 rounded-2xl bg-black shadow-lg">
-              <h3 className="text-xl font-semibold text-white">{p.title}</h3>
+            <div className="p-4 sm:p-6 rounded-2xl bg-black shadow-lg">
+              <h3 className="text-lg sm:text-xl font-semibold text-white">
+                {p.title}
+              </h3>
 
-              <div className="mt-4 h-[400px] overflow-scroll no-scrollbar rounded-lg border border-white/20">
+              <div className="mt-4 max-h-[220px] sm:max-h-[300px] lg:max-h-[380px] overflow-hidden rounded-lg border border-white/20">
                 <img
                   src={p.image}
                   alt={p.title}
-                  className="w-full rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                 />
               </div>
-
-              {/* <p className="text-sm mt-3 text-gray-300">{p.desc}</p> */}
 
               <div className="flex justify-center">
                 <a
                   href={p.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-block mt-4 bg-cyan-500 hover:bg-cyan-600 px-4 py-2 rounded transition"
+                  className="inline-block mt-4 bg-cyan-500 hover:bg-cyan-600 px-6 py-2 text-sm sm:text-base rounded transition"
                 >
                   Look it up
                 </a>
               </div>
             </div>
           </div>
-
-          // <div key={i}>
-          //   <img src={p.image} alt={p.title} />
-          //   <h3>{p.title}</h3>
-          //   <p>{p.desc}</p>
-          // </div>
         ))}
       </div>
 
-      <div className="text-center ">
+      <div className="text-center mt-10">
         <a
           href="/projects"
-          className="text-white rounded-2xl px-10 py-3 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500"
+          className="inline-block text-white rounded-2xl px-8 sm:px-10 py-3 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500"
         >
           See more projects
         </a>
       </div>
-      {/* <div className="grid md:grid-cols-2 gap-8">
-        {projects.map((p, i) => (
-          <div key={i} className="bg-slate-800 p-6 rounded-xl shadow-lg">
-            <h3 className="text-xl font-semibold">{p.title}</h3>
-            <PageRenderer link={p.link} />
-            <p className="text-sm mt-2 text-gray-300">{p.desc}</p>
-            <button className="mt-4 bg-cyan-500 px-4 py-2 rounded">
-              Look it up
-            </button>
-          </div>
-        ))}
-      </div> */}
     </section>
   );
 }
