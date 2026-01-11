@@ -76,3 +76,24 @@ const downloadFile = (req, res) => {
 };
 
 export { downloadFile };
+import axios from "axios";
+
+export const downloadFromGithub = async (req, res) => {
+  const { repo, branch } = req.project;
+
+  const zipUrl = `https://api.github.com/repos/${repo}/zipball/${branch}`;
+
+  const response = await axios.get(zipUrl, {
+    responseType: "stream",
+    headers: {
+      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+    },
+  });
+
+  res.setHeader(
+    "Content-Disposition",
+    `attachment; filename="project-code.zip"`
+  );
+
+  response.data.pipe(res);
+};

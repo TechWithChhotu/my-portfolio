@@ -22,6 +22,14 @@ const projectSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    sellingPrice: {
+      type: Number,
+      default: 0,
+    },
+    projectRepoLink: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

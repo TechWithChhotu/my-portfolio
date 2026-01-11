@@ -6,11 +6,14 @@ import { ownerAuth } from "./middleware/ownerAuth.js";
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://chhotuportfolio2026.netlify.app",
+];
 app.use(
   cors({
     // origin: "https://chhotupatel2026.netlify.app/",
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "PATCH"],
     credentials: true,
   })
