@@ -1,6 +1,10 @@
 import Razorpay from "razorpay";
 import crypto, { Hmac } from "crypto";
+import path from "path";
+import fs from "fs";
 
+import axios from "axios";
+import Project from "../model/project.model.js";
 const RAZORPAY_SECRET_KEY = process.env.RAZORPAY_SECRET_KEY;
 const RAZORPAY_ID_KEY = process.env.RAZORPAY_ID_KEY;
 
@@ -37,20 +41,25 @@ const order = (req, res) => {
 
 /*----------------->>Varify payment<<-----------------*/
 const verify = async (req, res) => {
-  const { razorpay_payment_id, razorpay_order_id, razorpay_signature } =
-    req.body;
+  const {
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature,
+    projectId,
+  } = req.body;
 
   const generated_signature = generateSignature(
     razorpay_order_id,
     razorpay_payment_id,
     RAZORPAY_SECRET_KEY
   );
+  console.log("id: ", projectId);
 
   if (generated_signature === razorpay_signature) {
     return res.status(200).json({
       success: true,
       message: "Payment successful",
-      downloadUrl: `${process.env.BASE_URL}/api/payment/download`,
+      downloadUrl: `${process.env.BASE_URL}/api/payment/${projectId}/download-git`,
     });
   }
 };
@@ -61,8 +70,38 @@ const ping = (req, res) => {
 
 export { order, verify, ping };
 // ====================DOWNLOAD================
-import path from "path";
-import fs from "fs";
+
+export const downloadFromGithub = async (req, res) => {
+  const projectId = req.params.id;
+  console.error("projectID: ", projectId);
+
+  try {
+    const project = await Project.findById(projectId);
+
+    const repo = "TechWithChhotu/my-portfolio"; // ✅ CORRECT
+    const branch = "main";
+
+    const zipUrl = `https://api.github.com/repos/${repo}/zipball/${branch}`;
+
+    const response = await axios.get(zipUrl, {
+      responseType: "stream",
+      headers: {
+        Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+        Accept: "application/vnd.github+json",
+      },
+    });
+
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename="project-code.zip"`
+    );
+
+    response.data.pipe(res);
+  } catch (error) {
+    console.error("GitHub download error:", error.response?.status);
+    res.status(500).json({ message: "Failed to download project code" });
+  }
+};
 
 const downloadFile = (req, res) => {
   // OPTIONAL: yahan paymentId / token verify bhi kar sakte ho
@@ -76,24 +115,3 @@ const downloadFile = (req, res) => {
 };
 
 export { downloadFile };
-import axios from "axios";
-
-export const downloadFromGithub = async (req, res) => {
-  const { repo, branch } = req.project;
-
-  const zipUrl = `https://api.github.com/repos/${repo}/zipball/${branch}`;
-
-  const response = await axios.get(zipUrl, {
-    responseType: "stream",
-    headers: {
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    },
-  });
-
-  res.setHeader(
-    "Content-Disposition",
-    `attachment; filename="project-code.zip"`
-  );
-
-  response.data.pipe(res);
-};

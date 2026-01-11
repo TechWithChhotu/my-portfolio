@@ -9,7 +9,7 @@ const project = async (req, res) => {
     });
   }
   try {
-    const { title, desc, link, isTop } = req.body;
+    const { title, desc, link, isTop, sellingPrice, projectRepo } = req.body;
 
     // ✅ wait for screenshot URL
     const image = await linkToSrceenshot(link);
@@ -19,6 +19,8 @@ const project = async (req, res) => {
       desc,
       link,
       isTop,
+      sellingPrice,
+      projectRepo,
       image, // STRING URL
     });
 

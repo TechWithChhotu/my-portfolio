@@ -9,7 +9,7 @@ import axios from "axios";
 export default function Projects() {
   const API_URL = import.meta.env.VITE_API_URL;
   console.log(API_URL);
-
+  const [projectId, setProjectId] = useState(null);
   const [projects, setProjects] = useState(null);
   // useEffect(() => {
   //   const getProject = async () => {
@@ -49,18 +49,13 @@ export default function Projects() {
 
   // =========AutoDownload==========
   const autoDownload = (url) => {
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", "");
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
+    window.location.href = url;
   };
 
   // =============handleGetCode============
-  const handleGetCode = async () => {
+  const handleGetCode = async (id, amount) => {
     const { data } = await axios.post(`${API_URL}/api/payment/order`, {
-      amount: 50000, // ₹500
+      amount: amount * 100,
     });
 
     const options = {
@@ -70,23 +65,27 @@ export default function Projects() {
       order_id: data.data.id,
       name: "Chhotu Portfolio",
       description: "Project Source Code",
-      handler: async function (response) {
-        verifyPayment(response);
+
+      handler: function (response) {
+        verifyPayment(response, id); // ✅ DIRECT PASS
       },
     };
 
     const rzp = new window.Razorpay(options);
     rzp.open();
   };
+
   // =================verifyPayment=============
-  const verifyPayment = async (paymentResponse) => {
-    const res = await axios.post(
-      `${API_URL}/api/payment/verify`,
-      paymentResponse
-    );
+  const verifyPayment = async (paymentResponse, projectId) => {
+    console.log("ID 2 ==> ", projectId); // ✅ AB UNDEFINED NAHI
+
+    const res = await axios.post(`${API_URL}/api/payment/verify`, {
+      ...paymentResponse,
+      projectId,
+    });
 
     if (res.data.success) {
-      autoDownload(res.data.downloadUrl);
+      window.location.href = res.data.downloadUrl;
     }
   };
 
@@ -130,7 +129,10 @@ export default function Projects() {
                 </a>
 
                 <button
-                  onClick={handleGetCode}
+                  onClick={() => {
+                    setProjectId(p._id);
+                    handleGetCode(p._id, p.sellingPrice);
+                  }}
                   className="inline-block mt-4 bg-purple-500 hover:bg-purple-600 px-6 py-2 text-sm sm:text-base rounded transition"
                 >
                   Get Code

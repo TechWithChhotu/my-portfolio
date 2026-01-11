@@ -26,7 +26,7 @@ const projectSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    projectRepoLink: {
+    projectRepo: {
       type: String,
       default: "",
     },

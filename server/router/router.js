@@ -12,6 +12,7 @@ import { createContact } from "../controller/contact.controller.js";
 import { contactLimiter } from "../middleware/rateLimit.js";
 import {
   downloadFile,
+  downloadFromGithub,
   order,
   verify,
 } from "../controller/payment.controller.js";
@@ -37,5 +38,6 @@ router.post("/contact", createContact);
 router.post("/payment/order", order);
 router.post("/payment/verify", verify);
 router.get("/payment/download", downloadFile);
+router.get("/payment/:id/download-git", downloadFromGithub);
 
 export default router;

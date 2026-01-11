@@ -7,6 +7,8 @@ export default function AddProject() {
     desc: "",
     link: "",
     isTop: false,
+    sellingPrice: 0,
+    projectRepo: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -87,6 +89,30 @@ export default function AddProject() {
             type="url"
             name="link"
             value={formData.link}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 rounded bg-slate-700 outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+        {/* selling price */}
+        <div className="mb-4">
+          <label className="block text-sm mb-1">Selling Price</label>
+          <input
+            type="number"
+            name="sellingPrice"
+            value={formData.sellingPrice}
+            onChange={handleChange}
+            required
+            className="w-full px-3 py-2 rounded bg-slate-700 outline-none focus:ring-2 focus:ring-cyan-500"
+          />
+        </div>
+        {/* project repo url */}
+        <div className="mb-4">
+          <label className="block text-sm mb-1">Project Repo url</label>
+          <input
+            type="text"
+            name="projectRepo"
+            value={formData.projectRepo}
             onChange={handleChange}
             required
             className="w-full px-3 py-2 rounded bg-slate-700 outline-none focus:ring-2 focus:ring-cyan-500"
