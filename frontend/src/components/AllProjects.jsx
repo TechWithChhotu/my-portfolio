@@ -47,6 +47,49 @@ export default function Projects() {
     getProject();
   }, []);
 
+  // =========AutoDownload==========
+  const autoDownload = (url) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "");
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  };
+
+  // =============handleGetCode============
+  const handleGetCode = async () => {
+    const { data } = await axios.post(`${API_URL}/api/payment/order`, {
+      amount: 50000, // ₹500
+    });
+
+    const options = {
+      key: import.meta.env.VITE_RAZORPAY_KEY,
+      amount: data.data.amount,
+      currency: "INR",
+      order_id: data.data.id,
+      name: "Chhotu Portfolio",
+      description: "Project Source Code",
+      handler: async function (response) {
+        verifyPayment(response);
+      },
+    };
+
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
+  // =================verifyPayment=============
+  const verifyPayment = async (paymentResponse) => {
+    const res = await axios.post(
+      `${API_URL}/api/payment/verify`,
+      paymentResponse
+    );
+
+    if (res.data.success) {
+      autoDownload(res.data.downloadUrl);
+    }
+  };
+
   return (
     <section id="Projects" className="py-16 sm:py-20 bg-[#0f1624]">
       <h2 className="text-2xl sm:text-3xl text-center mb-8 sm:mb-10 text-white">
@@ -76,7 +119,7 @@ export default function Projects() {
                 />
               </div>
 
-              <div className="flex justify-center">
+              <div className="flex justify-evenly">
                 <a
                   href={p.link}
                   target="_blank"
@@ -85,6 +128,13 @@ export default function Projects() {
                 >
                   Look it up
                 </a>
+
+                <button
+                  onClick={handleGetCode}
+                  className="inline-block mt-4 bg-purple-500 hover:bg-purple-600 px-6 py-2 text-sm sm:text-base rounded transition"
+                >
+                  Get Code
+                </button>
               </div>
             </div>
           </div>

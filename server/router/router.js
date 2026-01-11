@@ -10,6 +10,11 @@ import { ownerAuth } from "../middleware/ownerAuth.js";
 import { checkOwnerStatus } from "../controller/auth.controller.js";
 import { createContact } from "../controller/contact.controller.js";
 import { contactLimiter } from "../middleware/rateLimit.js";
+import {
+  downloadFile,
+  order,
+  verify,
+} from "../controller/payment.controller.js";
 
 const router = express.Router();
 
@@ -28,5 +33,9 @@ router.get("/project/top", ownerAuth, getTopProject);
 router.get("/auth/status", ownerAuth, checkOwnerStatus);
 router.post("/contact", createContact);
 // router.post("/contact-mail", contactLimiter, createContactMail);
+
+router.post("/payment/order", order);
+router.post("/payment/verify", verify);
+router.get("/payment/download", downloadFile);
 
 export default router;

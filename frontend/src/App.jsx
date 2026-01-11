@@ -28,6 +28,7 @@ export default function App() {
         <Route path="/projects" element={<AllProjects />} />
         <Route path="/update-project" element={<UpdateProject />} />
         <Route path="/add-project" element={<AddProject />} />
+        <Route path="/:id/code" element={<AddProject />} />
       </Route>
     )
   );
