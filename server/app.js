@@ -9,6 +9,7 @@ app.use(express.json());
 const allowedOrigins = [
   "http://localhost:5173",
   "https://chhotuportfolio2026.netlify.app",
+  "https://chhotupatel2026.netlify.app/",
 ];
 app.use(
   cors({
